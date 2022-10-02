@@ -1,0 +1,62 @@
+- Function base view: dùng func để tạo view bằng cách renturn render. 
+- Class base view: dùng Class để định nghĩa một view, có thể kế thừa lại từ class có những phần tử chung...
+
+create project:
+- install django
+- django-admin startproject xxx
+- python manage start app ...
+- include urls from app
+- def index in view
+- change path in app/urls
+- use admin site: python manage makemigrations + migrate _ create superaccount
+
+set yêu cầu đăng nhập:
+- cho function: @decorators.login_required(login_url='/login/')
+		def func...
+- cho class: 	class tenclas(LoginRequiredMixin, View):
+    		login_url = '/login/'
+    		def get(self, request):...
+
+Một số lỗi với migrate:
+- Lỗi khi bổ sung trường dữ liệu -> null =true, makemigrations rồi sửa lại các trường bị null rồi xóa bỏ null = true đi. Hoặc đơn giản hơn là xóa dtb đi rồi tạo lại.
+
+- Filter cho objects và một số truy vấn khác: query st model django
+
+- theem appname: app_name ='appname' ddeer goij view tuwf name -> vd: {% url 'appname:nameurl' item.id(thamso) %}
+
+- sửa tên hiển thì ở trang admin: trong file admin.py, thêm dòng admin.site.register(Model)
+
+from django.contrib import admin
+from django.urls import path, include, re_path
+from django.conf import settings
+from django.views.static import serve
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),
+
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root':  settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+]
+
+
+--quickstart
+# Create the project directory
+mkdir tutorial
+cd tutorial
+
+
+# Create a virtual environment to isolate our package dependencies locally
+python3 -m venv env
+source env/bin/activate  # On Windows use `env\Scripts\activate`
+
+# Install Django and Django REST framework into the virtual environment
+pip install django
+pip install djangorestframework
+pip install pygments
+
+# Set up a new project with a single application
+django-admin startproject tutorial .  # Note the trailing '.' character
+cd tutorial
+django-admin startapp quickstart
+cd ..
